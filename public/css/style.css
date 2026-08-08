@@ -308,7 +308,7 @@ button:hover { opacity: 0.85; }
 .form-hint {
   font-size: 11px;
   color: var(--ink-soft);
-  margin: -4px 0 10px;
+  margin: 8px 0 10px;
 }
 
 .field-textarea {
@@ -319,7 +319,7 @@ button:hover { opacity: 0.85; }
   border: 0.5px solid var(--rule-strong);
   background: var(--paper);
   resize: vertical;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   box-sizing: border-box;
 }
 
@@ -328,6 +328,7 @@ button:hover { opacity: 0.85; }
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
+  margin-bottom: 1.5rem;
 }
 
 /* ---------- technology filter ---------- */
