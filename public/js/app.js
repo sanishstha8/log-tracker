@@ -35,8 +35,8 @@
 
   let entries = [];
   let categories = [];
-  let filter = 'all';
   let techFilter = 'all';
+  let categoryManagerOpen = false;
 
   const CATEGORY_PALETTE = [
     { fg: '#4a1b0c', bg: 'var(--rust-soft)', dot: '#a5502c' },
@@ -140,41 +140,34 @@
     }
   }
 
-  function renderCategoryFilters() {
-    const container = document.getElementById('category-filters');
+  function renderCategoryOptions() {
+    const sel = document.getElementById('f-category');
+    const current = sel.value;
+    sel.innerHTML = categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+    sel.value = categories.includes(current) ? current : categories[0];
+  }
 
-    const allPill = `<button data-filter="all" class="filter-pill${filter === 'all' ? ' active' : ''}">All</button>`;
+  function renderCategoryManager() {
+    const panel = document.getElementById('category-manager');
 
-    const catPills = categories.map(cat => {
-      const active = filter === cat;
-      const removeBtn = categories.length > 1
-        ? `<i class="ti ti-x filter-pill-remove" data-remove-category="${escapeHtml(cat)}" aria-label="Remove category ${escapeHtml(cat)}"></i>`
+    const chips = categories.map(cat => {
+      const removeIcon = categories.length > 1
+        ? `<i class="ti ti-x category-chip-remove" data-remove-category="${escapeHtml(cat)}" aria-label="Remove category ${escapeHtml(cat)}"></i>`
         : '';
-      return `<button data-filter="${escapeHtml(cat)}" class="filter-pill${active ? ' active' : ''}">${escapeHtml(cat)}${removeBtn}</button>`;
+      return `<span class="category-chip">${escapeHtml(cat)}${removeIcon}</span>`;
     }).join('');
 
-    const addControl = `
+    panel.innerHTML = `
+      <div class="category-manager-chips">${chips}</div>
       <span class="category-add">
         <input id="new-category-input" type="text" placeholder="New category" class="mono category-add-input" />
-        <button id="add-category-btn" class="category-add-btn" aria-label="Add category">
+        <button id="add-category-btn" class="category-add-btn" type="button" aria-label="Add category">
           <i class="ti ti-plus" aria-hidden="true"></i>
         </button>
       </span>`;
 
-    container.innerHTML = allPill + catPills + addControl;
-
-    container.querySelectorAll('.filter-pill').forEach(btn => {
-      btn.addEventListener('click', (ev) => {
-        if (ev.target.hasAttribute('data-remove-category')) return;
-        filter = btn.getAttribute('data-filter');
-        renderCategoryFilters();
-        renderEntries();
-      });
-    });
-
-    container.querySelectorAll('[data-remove-category]').forEach(icon => {
-      icon.addEventListener('click', async (ev) => {
-        ev.stopPropagation();
+    panel.querySelectorAll('[data-remove-category]').forEach(icon => {
+      icon.addEventListener('click', async () => {
         const cat = icon.getAttribute('data-remove-category');
         if (categories.length <= 1) return;
         try {
@@ -182,9 +175,8 @@
           const data = await res.json();
           if (!res.ok) { alert(data.error || 'Could not remove category.'); return; }
           categories = data;
-          if (filter === cat) filter = 'all';
-          renderCategoryFilters();
           renderCategoryOptions();
+          renderCategoryManager();
           renderEntries();
         } catch (e) { /* handled by apiFetch on auth failure */ }
       });
@@ -199,8 +191,8 @@
         const data = await res.json();
         if (!res.ok) { alert(data.error || 'Could not add category.'); return; }
         categories = data;
-        renderCategoryFilters();
         renderCategoryOptions();
+        renderCategoryManager();
       } catch (e) { /* handled by apiFetch on auth failure */ }
     }
 
@@ -210,20 +202,18 @@
     });
   }
 
-  function renderCategoryOptions() {
-    const sel = document.getElementById('f-category');
-    const current = sel.value;
-    sel.innerHTML = categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
-    sel.value = categories.includes(current) ? current : categories[0];
-  }
+  document.getElementById('manage-categories-btn').addEventListener('click', () => {
+    categoryManagerOpen = !categoryManagerOpen;
+    const panel = document.getElementById('category-manager');
+    panel.hidden = !categoryManagerOpen;
+    document.getElementById('manage-categories-btn').classList.toggle('active', categoryManagerOpen);
+    if (categoryManagerOpen) renderCategoryManager();
+  });
 
   function renderEntries() {
     const list = document.getElementById('entries-list');
     const empty = document.getElementById('empty-state');
-    let filtered = filter === 'all' ? entries : entries.filter(e => e.category === filter);
-    if (techFilter !== 'all') {
-      filtered = filtered.filter(e => (e.tags || []).includes(techFilter));
-    }
+    let filtered = techFilter === 'all' ? entries : entries.filter(e => (e.tags || []).includes(techFilter));
     const sorted = [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
 
     if (sorted.length === 0) {
@@ -274,8 +264,8 @@
 
   function render() {
     renderStats();
-    renderCategoryFilters();
     renderCategoryOptions();
+    if (categoryManagerOpen) renderCategoryManager();
     renderEntries();
   }
 

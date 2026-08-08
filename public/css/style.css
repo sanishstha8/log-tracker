@@ -172,17 +172,55 @@ button:hover { opacity: 0.85; }
   margin: 0;
 }
 
-/* ---------- category filters ---------- */
+/* ---------- category control (beside skill/topic) ---------- */
 
-.category-filters {
+.category-control {
   display: flex;
   gap: 6px;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-  align-items: center;
 }
 
-.filter-pill {
+.category-control select { flex: 1; min-width: 0; }
+
+.category-manage-btn {
+  height: 36px;
+  width: 36px;
+  flex-shrink: 0;
+  border-radius: var(--radius);
+  border: 0.5px solid var(--rule-strong);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-manage-btn.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.category-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: -2px 0 10px;
+  padding: 10px;
+  border: 0.5px dashed var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.category-manager[hidden] { display: none; }
+
+.category-manager-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.category-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -190,18 +228,13 @@ button:hover { opacity: 0.85; }
   padding: 5px 12px;
   border-radius: 4px;
   border: 0.5px solid var(--rule-strong);
-  background: transparent;
+  background: var(--paper-raised);
   color: var(--ink);
-  cursor: pointer;
 }
 
-.filter-pill.active {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.filter-pill-remove {
+.category-chip-remove {
   font-size: 12px;
+  cursor: pointer;
 }
 
 .category-add {

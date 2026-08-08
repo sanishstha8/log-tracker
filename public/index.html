@@ -33,13 +33,17 @@
 
     <div id="stats-row" class="stats-row"></div>
 
-    <div id="category-filters" class="category-filters"></div>
-
     <div id="entry-form" class="entry-form">
       <div class="form-row form-row-skill">
         <input id="f-skill" type="text" class="field" placeholder="Skill or topic (e.g. Docker networking)" />
-        <select id="f-category" class="field"></select>
+        <div class="category-control">
+          <select id="f-category" class="field"></select>
+          <button id="manage-categories-btn" type="button" class="category-manage-btn" aria-label="Manage categories">
+            <i class="ti ti-settings" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
+      <div id="category-manager" class="category-manager" hidden></div>
       <div class="form-row form-row-tags">
         <input id="f-tags" type="text" class="field" placeholder="Technologies, comma separated (e.g. Docker, React)" />
         <div class="date-field">
