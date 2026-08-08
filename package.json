@@ -1,0 +1,15 @@
+{
+  "name": "learning-log-tracker",
+  "version": "1.0.0",
+  "description": "Learning log tracker with per-user accounts",
+  "private": true,
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learning Log Tracker — Sign in</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-brand">
+      <p class="mono header-subtitle">log // learning tracker</p>
+      <h1 class="header-title">Welcome</h1>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" data-tab="login">Log in</button>
+        <button type="button" class="auth-tab" data-tab="signup">Sign up</button>
+      </div>
+
+      <form id="auth-form" novalidate>
+        <div class="auth-field-group">
+          <input id="a-username" class="field" type="text" placeholder="Username" autocomplete="username" required />
+          <input id="a-password" class="field" type="password" placeholder="Password" autocomplete="current-password" required />
+        </div>
+        <p id="auth-hint" class="mono auth-hint">Log in to continue tracking your learning.</p>
+        <p id="auth-error" class="auth-error" role="alert"></p>
+        <button id="auth-submit" type="submit" class="btn btn-primary auth-submit">Log in</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learning Log Tracker</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app-root">
+    <h2 class="sr-only">Learning log tracker for tracking skills and progress across internship and coursework</h2>
+
+    <div class="header-bar">
+      <div>
+        <p class="mono header-subtitle">log tracker</p>
+        <h1 class="header-title">Learning log</h1>
+      </div>
+      <div class="header-actions">
+        <div id="streak-badge" class="mono streak-badge"></div>
+        <div id="user-badge" class="mono user-badge"></div>
+        <button id="export-btn" class="btn btn-sm">
+          <i class="ti ti-download btn-icon" aria-hidden="true"></i>Report (.md)
+        </button>
+        <button id="export-docx-btn" class="btn btn-sm">
+          <i class="ti ti-file-type-docx btn-icon" aria-hidden="true"></i>Report (.docx)
+        </button>
+        <button id="logout-btn" class="btn btn-sm">
+          <i class="ti ti-logout btn-icon" aria-hidden="true"></i>Log out
+        </button>
+      </div>
+    </div>
+
+    <div id="stats-row" class="stats-row"></div>
+
+    <div id="category-filters" class="category-filters"></div>
+
+    <div id="entry-form" class="entry-form">
+      <div class="form-row form-row-skill">
+        <input id="f-skill" type="text" class="field" placeholder="Skill or topic (e.g. Docker networking)" />
+        <select id="f-category" class="field"></select>
+      </div>
+      <div class="form-row form-row-tags">
+        <input id="f-tags" type="text" class="field" placeholder="Technologies, comma separated (e.g. Docker, React)" />
+        <div class="date-field">
+          <label for="f-date" class="mono date-label">
+            <i class="ti ti-calendar" aria-hidden="true"></i> date
+          </label>
+          <input id="f-date" type="date" class="field date-input" />
+        </div>
+      </div>
+      <p class="mono form-hint">Backdate this to log a day you forgot to add.</p>
+      <textarea id="f-note" class="field-textarea" placeholder="What did you learn or do? A line or two is enough."></textarea>
+      <div class="form-actions">
+        <button id="f-submit" class="btn btn-primary">Add entry</button>
+      </div>
+    </div>
+
+    <div class="tech-filter-row">
+      <select id="tech-filter" class="field tech-select">
+        <option value="all">All technologies</option>
+      </select>
+    </div>
+
+    <div id="entries-list" class="entries-list"></div>
+    <p id="empty-state" class="empty-state">No entries yet. Log your first skill above.</p>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
